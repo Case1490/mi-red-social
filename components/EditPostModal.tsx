@@ -25,6 +25,7 @@ export default function EditPostModal({ post, onClose, onSaved }: Props) {
   const fileRef = useRef<HTMLInputElement>(null)
   const supabase = createClient()
 
+
   const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (!file) return
@@ -62,6 +63,7 @@ export default function EditPostModal({ post, onClose, onSaved }: Props) {
       .from('posts')
       .update({ content: content.trim(), image_url })
       .eq('id', post.id)
+      .select()
 
     setLoading(false)
     onSaved(content.trim(), image_url ?? null)
