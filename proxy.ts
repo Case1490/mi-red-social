@@ -27,18 +27,18 @@ export async function proxy(request: NextRequest) {
 
   const { data: { user } } = await supabase.auth.getUser()
 
-  // Si no está logueado y quiere acceder a rutas protegidas, redirige al login
-  if (!user && !request.nextUrl.pathname.startsWith('/login') &&
-    !request.nextUrl.pathname.startsWith('/register') &&
-    !request.nextUrl.pathname.startsWith('/forgot-password') &&
-    !request.nextUrl.pathname.startsWith('/reset-password')) {
+  const pathname = request.nextUrl.pathname
+
+  const publicRoutes = ['/', '/login', '/register', '/forgot-password', '/reset-password']
+  const isPublic = publicRoutes.some(r => pathname === r || pathname.startsWith(r + '/'))
+
+  // Sin sesión y ruta protegida → login
+  if (!user && !isPublic) {
     return NextResponse.redirect(new URL('/login', request.url))
   }
 
-  // Si ya está logueado y va al login/register, redirige al feed
-  if (user && (request.nextUrl.pathname.startsWith('/login') ||
-    request.nextUrl.pathname.startsWith('/register') ||
-    request.nextUrl.pathname.startsWith('/forgot-password'))) {
+  // Con sesión y ruta pública → feed
+  if (user && isPublic) {
     return NextResponse.redirect(new URL('/feed', request.url))
   }
 
