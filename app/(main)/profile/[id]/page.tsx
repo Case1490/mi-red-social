@@ -120,9 +120,9 @@ export default function ProfilePage({ params }: { params: Promise<{ id: string }
     <div className="space-y-6">
       {/* Header del perfil */}
       <div className="bg-gray-900 rounded-2xl p-8 border border-gray-800">
-        <div className="flex items-start justify-between">
-          <div className="flex items-center gap-5">
-            <div className="w-20 h-20 rounded-full bg-indigo-600 flex items-center justify-center text-white text-3xl font-bold overflow-hidden flex-shrink-0">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="flex items-center gap-4">
+            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-indigo-600 flex items-center justify-center text-white text-3xl font-bold overflow-hidden shrink-0">
               {profile.avatar_url
                 ? <img src={profile.avatar_url} alt={profile.username} className="w-full h-full object-cover" />
                 : profile.username[0].toUpperCase()

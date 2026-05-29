@@ -123,7 +123,7 @@ export default function ChatPage({ params }: { params: Promise<{ id: string }> }
   }
 
   return (
-    <div className="flex flex-col h-[calc(100vh-4rem)]">
+    <div className="flex flex-col h-[calc(100vh-8rem)] lg:h-[calc(100vh-4rem)]">
       <div className="flex items-center gap-3 pb-4 mb-4 border-b border-gray-800">
         <Link href="/messages" className="text-gray-400 hover:text-white transition">←</Link>
         <div className="w-9 h-9 rounded-full bg-indigo-600 flex items-center justify-center text-white font-bold text-sm overflow-hidden">

@@ -65,31 +65,28 @@ export default function LandingPage() {
       </nav>
 
       {/* Hero */}
-      <div className="flex-1 flex items-center justify-between px-10 lg:px-20 py-16 gap-12">
+      <div className="flex-1 flex flex-col lg:flex-row items-center justify-between px-6 lg:px-20 py-10 gap-10">
 
         {/* Texto izquierda */}
-        <div className="flex-1 max-w-xl">
-          <div className="inline-flex items-center gap-2 bg-indigo-950 border border-indigo-800 text-indigo-400 text-xs font-medium px-3 py-1.5 rounded-full mb-6">
-            ⚡ La red social que estabas esperando
-          </div>
-          <h1 className="text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
+        {/* Texto */}
+        <div className="w-full flex-1 max-w-xl text-center lg:text-left">
+          
+          <h1 className="text-4xl lg:text-6xl font-bold text-white leading-tight mb-6">
             Conecta con el{' '}
             <span className="text-indigo-400">mundo</span>{' '}
             que te importa
           </h1>
-          <p className="text-gray-400 text-lg leading-relaxed mb-8">
-            Publica, comenta, sigue a personas interesantes y chatea en tiempo real. Todo en un solo lugar.
+          <p className="text-gray-400 text-base lg:text-lg leading-relaxed mb-8">
+            Publica, comenta, sigue a personas interesantes y chatea en tiempo real.
           </p>
-
-          {/* Features */}
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-3 items-center lg:items-start">
             {[
               { icon: '📝', text: 'Publica fotos y textos' },
               { icon: '💬', text: 'Mensajes directos en tiempo real' },
               { icon: '🔔', text: 'Notificaciones instantáneas' },
             ].map((f) => (
               <div key={f.text} className="flex items-center gap-3 text-gray-300 text-sm">
-                <span className="text-base">{f.icon}</span>
+                <span>{f.icon}</span>
                 {f.text}
               </div>
             ))}
@@ -97,7 +94,7 @@ export default function LandingPage() {
         </div>
 
         {/* Formulario derecha */}
-        <div className="w-full max-w-md flex-shrink-0">
+        <div className="w-full lg:max-w-md lg:shrink-0">
           <div className="bg-gray-900 border border-gray-800 rounded-2xl p-8 shadow-2xl">
             <h2 className="text-2xl font-bold text-white mb-1">Crear cuenta gratis</h2>
             <p className="text-gray-400 text-sm mb-6">Únete a la comunidad hoy</p>
