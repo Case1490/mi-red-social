@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation'
 import { createClient } from '@/lib/supabase'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
+import Avatar from './Avatar'
 
 export default function Sidebar() {
   const pathname = usePathname()
@@ -13,12 +14,20 @@ export default function Sidebar() {
   const [userId, setUserId] = useState<string | null>(null)
   const [unread, setUnread] = useState(0)
   const [unreadMessages, setUnreadMessages] = useState(0)
+  const [profile, setProfile] = useState<{ username: string; avatar_url: string | null } | null>(null)
 
   useEffect(() => {
     const init = async () => {
       const { data: { user } } = await supabase.auth.getUser()
       if (!user) return
       setUserId(user.id)
+
+      const { data: profileData } = await supabase
+        .from('profiles')
+        .select('username, avatar_url')
+        .eq('id', user.id)
+        .single()
+      if (profileData) setProfile(profileData)
 
       // Cargar contadores inmediatamente
       await Promise.all([
@@ -139,6 +148,18 @@ export default function Sidebar() {
           </Link>
         ))}
       </nav>
+
+      {userId && profile && (
+        <Link
+          href={`/profile/${userId}`}
+          className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-800 transition mb-1"
+        >
+          <Avatar userId={userId} username={profile.username} avatarUrl={profile.avatar_url} size="sm" />
+          <div className="min-w-0">
+            <p className="text-white text-sm font-medium truncate">@{profile.username}</p>
+          </div>
+        </Link>
+      )}
 
       <button
         onClick={handleLogout}

@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { createClient } from '@/lib/supabase'
 import Link from 'next/link'
+import Avatar from '@/components/Avatar'
 
 type Conversation = {
   profile: {
@@ -98,12 +99,7 @@ export default function MessagesPage() {
             href={`/messages/${conv.profile.id}`}
             className="bg-gray-900 border border-gray-800 hover:border-indigo-500/50 rounded-2xl p-5 flex items-center gap-4 transition group"
           >
-            <div className="w-12 h-12 rounded-full bg-indigo-600 flex items-center justify-center text-white font-bold overflow-hidden flex-shrink-0">
-              {conv.profile.avatar_url
-                ? <img src={conv.profile.avatar_url} className="w-full h-full object-cover" alt="" />
-                : conv.profile.username[0].toUpperCase()
-              }
-            </div>
+            <Avatar userId={conv.profile.id} username={conv.profile.username} avatarUrl={conv.profile.avatar_url} size="md" />
             <div className="flex-1 min-w-0">
               <div className="flex items-center justify-between">
                 <p className="text-white font-semibold text-sm">@{conv.profile.username}</p>

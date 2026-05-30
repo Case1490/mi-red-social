@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { createClient } from '@/lib/supabase'
 import Link from 'next/link'
 import PostCard from '@/components/PostCard'
+import Avatar from '@/components/Avatar'
 
 type Profile = {
   id: string
@@ -140,12 +141,7 @@ export default function ExplorePage() {
                   href={`/profile/${profile.id}`}
                   className="bg-gray-900 border border-gray-800 hover:border-indigo-500/50 rounded-2xl p-5 flex items-center gap-4 transition group"
                 >
-                  <div className="w-12 h-12 rounded-full bg-indigo-600 flex items-center justify-center text-white font-bold overflow-hidden flex-shrink-0">
-                    {profile.avatar_url
-                      ? <img src={profile.avatar_url} alt={profile.username} className="w-full h-full object-cover" />
-                      : profile.username[0].toUpperCase()
-                    }
-                  </div>
+                  <Avatar userId={profile.id} username={profile.username} avatarUrl={profile.avatar_url} size="md" />
                   <div className="flex-1 min-w-0">
                     <p className="text-white font-semibold text-sm group-hover:text-indigo-400 transition">
                       @{profile.username}

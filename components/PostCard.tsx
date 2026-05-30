@@ -8,6 +8,7 @@ import { toast } from './Toast'
 import PostMenu from './PostMenu'
 import ConfirmModal from './ConfirmModal'
 import EditPostModal from './EditPostModal'
+import Avatar from './Avatar'
 
 type Post = {
   id: string
@@ -100,7 +101,7 @@ export default function PostCard({ post, onUpdate }: { post: Post; onUpdate: () 
       await supabase.from('likes').insert({ post_id: post.id, user_id: user.id })
       setLikes(l => l + 1)
       setLiked(true)
-      toast('❤️ Like dado')
+      toast('❤️ Like')
     }
   }
 
@@ -141,13 +142,9 @@ export default function PostCard({ post, onUpdate }: { post: Post; onUpdate: () 
         {/* Header */}
         <div className="flex items-start gap-3 mb-3">
           <Link href={`/profile/${post.user_id}`}>
-            <div className="w-10 h-10 rounded-full bg-indigo-600 flex items-center justify-center text-white font-bold text-sm overflow-hidden flex-shrink-0">
-              {avatar
-                ? <img src={avatar} alt={username} className="w-full h-full object-cover" />
-                : username[0].toUpperCase()
-              }
-            </div>
+            <Avatar userId={post.user_id} username={username} avatarUrl={avatar} size="md" />
           </Link>
+
           <div className="flex-1 min-w-0">
             <div className="flex items-center justify-between w-full">
               <div className="flex items-center gap-2">
@@ -205,12 +202,7 @@ export default function PostCard({ post, onUpdate }: { post: Post; onUpdate: () 
           <div className="mt-4 space-y-3">
             {comments.map((c) => (
               <div key={c.id} className="flex gap-2 items-start">
-                <div className="w-7 h-7 rounded-full bg-indigo-700 flex items-center justify-center text-white text-xs font-bold flex-shrink-0 overflow-hidden">
-                  {c.profiles?.avatar_url
-                    ? <img src={c.profiles.avatar_url} className="w-full h-full object-cover" alt="" />
-                    : c.profiles?.username?.[0]?.toUpperCase()
-                  }
-                </div>
+                <Avatar userId={c.id} username={c.profiles?.username || ''} avatarUrl={c.profiles?.avatar_url} size="sm" />
                 <div className="bg-gray-800 rounded-xl px-3 py-2 text-sm flex-1">
                   <span className="text-indigo-400 font-medium">@{c.profiles?.username} </span>
                   <span className="text-gray-200">{c.content}</span>
@@ -259,12 +251,12 @@ export default function PostCard({ post, onUpdate }: { post: Post; onUpdate: () 
             post={post}
             onClose={() => setEditing(false)}
             onSaved={(newContent, newImage) => {
-  setLocalContent(newContent)
-  setLocalImage(newImage)
-  setEditing(false)
-  toast('✏️ Publicación editada')
-  onUpdate()
-}}
+              setLocalContent(newContent)
+              setLocalImage(newImage)
+              setEditing(false)
+              toast('✏️ Publicación editada')
+              onUpdate()
+            }}
           />
         </div>
       )}

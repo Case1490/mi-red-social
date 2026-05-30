@@ -6,6 +6,7 @@ import { createClient } from '@/lib/supabase'
 import Link from 'next/link'
 import { use } from 'react'
 import PostCard from '@/components/PostCard'
+import Avatar from '@/components/Avatar'
 
 type Profile = {
   id: string
@@ -122,12 +123,7 @@ export default function ProfilePage({ params }: { params: Promise<{ id: string }
       <div className="bg-gray-900 rounded-2xl p-8 border border-gray-800">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div className="flex items-center gap-4">
-            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-indigo-600 flex items-center justify-center text-white text-3xl font-bold overflow-hidden shrink-0">
-              {profile.avatar_url
-                ? <img src={profile.avatar_url} alt={profile.username} className="w-full h-full object-cover" />
-                : profile.username[0].toUpperCase()
-              }
-            </div>
+            <Avatar userId={id} username={profile.username} avatarUrl={profile.avatar_url} size="lg" />
             <div>
               <h1 className="text-2xl font-bold text-white">@{profile.username}</h1>
               {profile.full_name && (
@@ -157,8 +153,8 @@ export default function ProfilePage({ params }: { params: Promise<{ id: string }
               <button
                 onClick={toggleFollow}
                 className={`text-sm font-medium px-5 py-2 rounded-full transition ${isFollowing
-                    ? 'bg-gray-800 hover:bg-red-900/30 hover:text-red-400 text-white'
-                    : 'bg-indigo-600 hover:bg-indigo-700 text-white'
+                  ? 'bg-gray-800 hover:bg-red-900/30 hover:text-red-400 text-white'
+                  : 'bg-indigo-600 hover:bg-indigo-700 text-white'
                   }`}
               >
                 {isFollowing ? 'Siguiendo' : 'Seguir'}
@@ -173,14 +169,14 @@ export default function ProfilePage({ params }: { params: Promise<{ id: string }
             <p className="text-white font-bold text-xl">{posts.length}</p>
             <p className="text-gray-500 text-xs mt-0.5">Posts</p>
           </div>
-          <div className="text-center">
+          <Link href={`/profile/${id}/followers`} className="text-center hover:opacity-80 transition">
             <p className="text-white font-bold text-xl">{followers}</p>
             <p className="text-gray-500 text-xs mt-0.5">Seguidores</p>
-          </div>
-          <div className="text-center">
+          </Link>
+          <Link href={`/profile/${id}/following`} className="text-center hover:opacity-80 transition">
             <p className="text-white font-bold text-xl">{following}</p>
             <p className="text-gray-500 text-xs mt-0.5">Siguiendo</p>
-          </div>
+          </Link>
         </div>
       </div>
 

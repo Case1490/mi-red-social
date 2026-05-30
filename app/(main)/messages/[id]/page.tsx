@@ -3,6 +3,7 @@
 import { useEffect, useState, useRef, use } from 'react'
 import { createClient } from '@/lib/supabase'
 import Link from 'next/link'
+import Avatar from '@/components/Avatar'
 
 type Message = {
   id: string
@@ -126,12 +127,7 @@ export default function ChatPage({ params }: { params: Promise<{ id: string }> }
     <div className="flex flex-col h-[calc(100vh-8rem)] lg:h-[calc(100vh-4rem)]">
       <div className="flex items-center gap-3 pb-4 mb-4 border-b border-gray-800">
         <Link href="/messages" className="text-gray-400 hover:text-white transition">←</Link>
-        <div className="w-9 h-9 rounded-full bg-indigo-600 flex items-center justify-center text-white font-bold text-sm overflow-hidden">
-          {otherProfile?.avatar_url
-            ? <img src={otherProfile.avatar_url} className="w-full h-full object-cover" alt="" />
-            : otherProfile?.username[0].toUpperCase()
-          }
-        </div>
+        <Avatar userId={otherId} username={otherProfile?.username || ''} avatarUrl={otherProfile?.avatar_url} size="sm" />
         <Link href={`/profile/${otherId}`} className="font-semibold text-white hover:text-indigo-400 transition text-sm">
           @{otherProfile?.username}
         </Link>

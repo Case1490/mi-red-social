@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { createClient } from '@/lib/supabase'
 import Link from 'next/link'
+import Avatar from '@/components/Avatar'
 
 type Notification = {
   id: string
@@ -116,13 +117,8 @@ export default function NotificationsPage() {
                 : 'bg-gray-900 border-gray-800 hover:border-gray-700'
             }`}
           >
-            <div className="relative flex-shrink-0">
-              <div className="w-10 h-10 rounded-full bg-indigo-600 flex items-center justify-center text-white font-bold overflow-hidden">
-                {notif.actor?.avatar_url
-                  ? <img src={notif.actor.avatar_url} className="w-full h-full object-cover" alt="" />
-                  : notif.actor?.username[0].toUpperCase()
-                }
-              </div>
+            <div className="relative shrink-0">
+              <Avatar userId={notif.actor.id} username={notif.actor?.username || ''} avatarUrl={notif.actor?.avatar_url} size="md" />
               <span className="absolute -bottom-1 -right-1 text-sm">
                 {notifIcon(notif.type)}
               </span>
